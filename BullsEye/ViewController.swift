@@ -20,26 +20,17 @@ class ViewController: UIViewController {
     @IBOutlet weak var targetLabel: UILabel! // outlet for target value in main.storyboard
     @IBOutlet weak var scoreLabel: UILabel! // outlet for score
     @IBOutlet weak var roundLabel: UILabel! // outlet for round
-    //@IBOutlet weak var startOver: UIButton! // outlet for Start Over button
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        //currentValue = lroundf(slider.value) // assigned value on launch
-        //targetValue = 1 + Int(arc4random_uniform(100)) // generate a random target value
-        // Do any additional setup after loading the view, typically from a nib.
-        //startNewRound()
-        
         //let thumbImageNormal = UIImage(named: "SliderThumb-Normal")! // image file name
         let thumbImageNormal = #imageLiteral(resourceName: "SliderThumb-Normal")
         slider.setThumbImage(thumbImageNormal, for: .normal)
-        
-        //let thumbImageHighlighted = UIImage(named: "SliderThumb-Highlighted")!
+    
         let thumbImageHighlighted = #imageLiteral(resourceName: "SliderThumb-Highlighted") // image literal. cute
         slider.setThumbImage(thumbImageHighlighted, for: .highlighted)
         
         let insets = UIEdgeInsets(top: 0, left: 14, bottom: 0, right: 14)
-        
-        //let trackLeftImage = UIImage(named: "SliderTrackLeft")!
         let trackLeftImage = #imageLiteral(resourceName: "SliderTrackLeft")
         let trackLeftResizable = trackLeftImage.resizableImage(withCapInsets: insets)
         slider.setMinimumTrackImage(trackLeftResizable, for: .normal)
@@ -49,52 +40,19 @@ class ViewController: UIViewController {
         let trackRightResizable = trackRightImage.resizableImage(withCapInsets: insets)
         slider.setMaximumTrackImage(trackRightResizable, for: .normal)
         
-        
-        
         startNewGame()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
-    
-    
-
     // @IBAction labels are interface builder objects - event-driven
     @IBAction func showAlert() {
-        //var difference: Int
-        /*
-        if (currentValue > targetValue) {
-            difference = currentValue - targetValue
-        }
-        else if (targetValue > currentValue) {
-            difference = targetValue - currentValue
-        }
-        else {
-            difference = 0
-        }
-        */
-        /*
-        var difference = currentValue - targetValue
-        if difference < 0 {
-            difference *= -1
-        }
-        */
         let difference = abs(targetValue - currentValue) // absolute value (negative or positive)
         var points = 100 - difference
-        //score += points
-        
-        /*
-        let message = "The value of the slider is: \(currentValue)" +
-                      "\nThe target value is: \(targetValue)" +
-                      "\nThe difference is: \(difference)"
-        */
- 
-        //let message = "You scored \(points) points!"
-        
         let title: String
+        
         if difference == 0 {
             title = "Bull's Eye!"
             points += 100 // bonus points
@@ -119,22 +77,13 @@ class ViewController: UIViewController {
                       "\nThe target: \(targetValue)" +
                       "\nThe difference is: \(difference)"
 
-        let alert = UIAlertController(title: title,
-                                      message: message,
-                                      preferredStyle: .alert)
-        /*
-        let action = UIAlertAction(title: "Dank",
-                                   style: .default,
-                                   handler: nil)
-        */
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+
         let action = UIAlertAction(title: "Next Round",
                                    style: .default,
                                    handler: {action in self.startNewRound()}) // added a closure
         alert.addAction(action)
         present(alert, animated: true, completion: nil)
-        
-        //startNewRound()
-        
     }
 
     @IBAction func sliderMoved(_ slider: UISlider) {
@@ -154,12 +103,6 @@ class ViewController: UIViewController {
         transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
         view.layer.add(transition, forKey: nil)
     }
-    
-    /*
-    @IBAction func startOver() {
-        startNewGame()
-    }
- */
     
     /* NEW ROUND
      - target value is generated at random
